@@ -4,10 +4,12 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { LogOut, Menu, Search } from "lucide-react";
+import { LogOut, Menu, Search, Loader2 } from "lucide-react";
 import { getProfilePic } from "../utils/getProfilePic";
+import { useLogout } from "../hooks/useLogout.js";
 
 export function ChatList({ selectedUser, setSelectedUser }) {
+  const { logout, loading } = useLogout(); 
   const users = [
     {
       id: "1",
@@ -40,8 +42,18 @@ export function ChatList({ selectedUser, setSelectedUser }) {
           <span className="sr-only">Menu</span>
         </Button>
         <h1 className="text-xl font-semibold">Chats</h1>
-        <Button variant="ghost" size="icon" className="text-zinc-400">
-          <LogOut className="h-6 w-6" />
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="text-zinc-400" 
+          onClick={logout}
+          disabled={loading}
+        >
+          {loading ? (
+            <Loader2 className="h-6 w-6 animate-spin" />
+          ) : (
+            <LogOut className="h-6 w-6" />
+          )}
           <span className="sr-only">Logout</span>
         </Button>
       </div>

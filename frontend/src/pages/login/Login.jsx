@@ -1,15 +1,21 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 "use client";
-import React from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useLogin } from "../../hooks/useLogin";
 
 const Login = () => {
-  const handleSubmit = (e) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { loading, login } = useLogin(); 
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Login form submitted");
+    await login({ username, password });
   };
 
   return (
@@ -21,8 +27,14 @@ const Login = () => {
       </p>
       <form className="mt-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="you@example.com" type="email" />
+          <Label htmlFor="username">Username</Label>
+          <Input
+            id="username"
+            placeholder="Enter your username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
@@ -30,22 +42,25 @@ const Login = () => {
             id="password"
             placeholder="Enter your password"
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </LabelInputContainer>
 
         <button
           className="bg-gradient-to-br relative group/btn from-black from-zinc-900 to-zinc-900 to-neutral-600 block bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
+          disabled={loading}
         >
-          Log in &rarr;
+           {loading ? "Logging in..." : "Log in"}
           <BottomGradient />
         </button>
 
         <p className="text-neutral-400 text-sm max-w-sm mt-4 text-center">
           Don&apos;t have an account?{" "}
-          <a href="#" className="hover:text-blue-400">
+          <Link to="/signup" className="hover:text-blue-400">
             Sign Up Here
-          </a>
+          </Link>
         </p>
       </form>
     </div>
