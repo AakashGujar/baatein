@@ -8,8 +8,8 @@ export default function App() {
   return (
     <WavyBackground className="mx-auto">
       {/* <Login /> */}
-      {/* <Signup/> */}
-      <Home/>
+      <Signup/>
+      {/* <Home/> */}
     </WavyBackground>
   );
 }
