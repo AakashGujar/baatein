@@ -7,12 +7,7 @@ import useConversation from "@/zustand/useConversation";
 const Conversation = () => {
   const { loading, conversations } = useGetConversations();
   const { selectedConversation, setSelectedConversation } = useConversation();
-  
-  if (conversations.length === 0) {
-    console.log("No conversations available.");
-  }
-  console.log("Conversations: ", conversations);
-  
+    
   return (
     <ScrollArea className="flex-1">
       {conversations.map((conversation) => {
