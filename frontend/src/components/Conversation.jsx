@@ -1,11 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { ScrollArea } from "../components/ui/scroll-area";
-import useGetConversations from "../hooks/useGetConversations.js";
 import useConversation from "@/zustand/useConversation";
 
-const Conversation = () => {
-  const { loading, conversations } = useGetConversations();
+const Conversation = ({ conversations }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
     
   return (
