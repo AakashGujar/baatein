@@ -13,23 +13,22 @@ export function useSignup() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/auth/signup", {
+      const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullName, username, password, confirmPassword }),
       });
 
       const data = await res.json();
+      if (data.error) {
+				throw new Error(data.error);
+			}
 
-      if (!res.ok) {
-        throw new Error(data.error || "Signup failed");
-      }
-
-      toast("✅ Signup successful!");
       localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser(data);
+      toast("Signup successful!");
     } catch (error) {
-      toast(`❌ ${error.message || "Signup failed. Please try again."}`);
+      toast(`${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -38,20 +37,20 @@ export function useSignup() {
   return { loading, signup };
 }
 
-// Input validation function
+
 function handleInputErrors({ fullName, username, password, confirmPassword }) {
   if (!fullName || !username || !password || !confirmPassword) {
-    toast("⚠️ Please fill in all required fields to continue.");
+    toast("Please fill in all required fields to continue.");
     return false;
   }
 
   if (password !== confirmPassword) {
-    toast("❌ Passwords you entered do not match.");
+    toast("Passwords you entered do not match.");
     return false;
   }
 
   if (password.length < 6) {
-    toast("🔒 Password must be at least 6 characters long.");
+    toast("Password must be at least 6 characters long.");
     return false;
   }
   return true;

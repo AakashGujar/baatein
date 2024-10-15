@@ -23,11 +23,11 @@ export const sendMessage = async (req, res) => {
             message,
         });
 
-        await newMessage.save();
+        if (newMessage) {
+            conversation.messages.push(newMessage._id);
+        }
 
-        conversation.messages.push(newMessage._id);
-        await conversation.save();
-
+        await Promise.all([conversation.save(), newMessage.save()]);
         res.status(200).json(newMessage);
     } catch (error) {
         console.error("Error in sendMessage: ", error);
@@ -44,14 +44,10 @@ export const getMessages = async (req, res) => {
             participants: { $all: [senderId, toChatWith] },
         }).populate("messages");
 
-        if (!conversation) {
-            return res.status(404).json({ error: "Conversation not found" });
-        }
+        if (!conversation) return res.status(200).json([]);
+        const messages = await conversation.messages;
 
-        // const onlyMessages = conversation.messages.map(msg => msg.message);
-        // res.status(200).json(onlyMessages);
-
-        res.status(200).json(conversation.messages);
+        res.status(200).json(messages);
 
     } catch (error) {
         console.error("Error in getMessages: ", error);

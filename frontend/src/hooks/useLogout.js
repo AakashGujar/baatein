@@ -10,7 +10,7 @@ export function useLogout() {
   const logout = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/auth/logout", {
+      const res = await fetch("/api/auth/logout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
@@ -20,10 +20,10 @@ export function useLogout() {
       }
       localStorage.removeItem("chat-user");
       setAuthUser(null);
-      toast("✅ Logged out successfully!");
-      
+      toast("Logged out successfully!");
+
     } catch (error) {
-      toast(`❌ ${error.message}`);
+      toast(`${error.message}`);
     } finally {
       setLoading(false);
     }
