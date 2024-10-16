@@ -3,17 +3,20 @@
 import React from "react";
 import { ScrollArea } from "../components/ui/scroll-area";
 import useConversation from "@/zustand/useConversation";
+import { useSocketContext } from "@/context/SocketContext";
 
 const Conversation = ({ conversations }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
-    
+  const { onlineUsers } = useSocketContext();
+  
   return (
     <ScrollArea className="flex-1">
       {conversations.map((conversation) => {
         const isSelected = selectedConversation?._id === conversation._id;
+        const isOnline = onlineUsers.includes(conversation._id);
         return (
-          <div 
-            key={conversation._id} 
+          <div
+            key={conversation._id}
             className={`p-4 cursor-pointer hover:bg-zinc-800 ${
               isSelected ? "bg-zinc-800" : ""
             }`}
@@ -35,7 +38,7 @@ const Conversation = ({ conversations }) => {
               </div>
               <div
                 className={`w-2 h-2 rounded-full ${
-                  conversation.status === "online" ? "bg-green-500" : "bg-zinc-600"
+                  isOnline ? "bg-green-500" : "bg-zinc-600"
                 }`}
               />
             </div>

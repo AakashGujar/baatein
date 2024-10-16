@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Phone, Video, MoreVertical } from "lucide-react";
 
-const ChatHeader = ({ selectedConversation, selectedUserData }) => (
+const ChatHeader = ({ selectedConversation}) => (
   <div className="p-4 border-b border-zinc-800 flex justify-between items-center">
     <div className="flex items-center space-x-4">
       <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
@@ -18,7 +18,7 @@ const ChatHeader = ({ selectedConversation, selectedUserData }) => (
         <h2 className="text-lg font-semibold">
           {selectedConversation.fullName}
         </h2>
-        <p className="text-sm text-zinc-400">{selectedUserData.status}</p>
+        <p className="text-sm text-zinc-400"></p>
       </div>
     </div>
     <div className="flex space-x-2">

@@ -6,10 +6,10 @@ import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import { Toaster } from "./components/ui/sonner";
 import { AuthContextProvider, useAuthContext } from "./context/authContext";
+import { SocketContextProvider } from "./context/SocketContext";
 
 function AppRoutes() {
   const { authUser } = useAuthContext();
-
   return (
     <Routes>
       <Route
@@ -31,10 +31,12 @@ function AppRoutes() {
 export default function App() {
   return (
     <AuthContextProvider>
-      <WavyBackground className="mx-auto">
-        <AppRoutes />
-        <Toaster />
-      </WavyBackground>
+      <SocketContextProvider>
+        <WavyBackground className="mx-auto">
+          <AppRoutes />
+          <Toaster />
+        </WavyBackground>
+      </SocketContextProvider>
     </AuthContextProvider>
   );
 }

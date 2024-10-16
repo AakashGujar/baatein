@@ -16,7 +16,6 @@ export function ChatList() {
   const { setSelectedConversation } = useConversation();
   const { conversations } = useGetConversations();
   const [filteredConversations, setFilteredConversations] = useState(conversations);
-
   useEffect(() => {
     if (search.length >= 3) {
       const filtered = conversations.filter((c) =>

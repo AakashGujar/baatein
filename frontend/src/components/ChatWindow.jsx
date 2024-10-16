@@ -12,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 
-export function ChatWindow({ selectedUser }) {
+export function ChatWindow() {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { loading: sendingMessage, sendMessage } = useSendMessage();
   const { messages, loading: loadingMessages } = useGetMessages();
@@ -35,10 +35,7 @@ export function ChatWindow({ selectedUser }) {
     <div className="flex min-w-[660px]">
       {selectedConversation ? (
         <div className="flex-1 flex flex-col">
-          <ChatHeader
-            selectedConversation={selectedConversation}
-            selectedUserData={selectedUser}
-          />
+          <ChatHeader selectedConversation={selectedConversation} />
           <ScrollArea className="flex-1 p-4">
             {loadingMessages ? (
               <MessageSkeleton />
