@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { ChatList } from "../../components/ChatList";
-import { ChatWindow } from "../../components/ChatWindow";
+import { ChatList } from "../../components/messages/ChatList";
+import { ChatWindow } from "../../components/messages/ChatWindow";
 
 export default function Home() {
   const [selectedUser, setSelectedUser] = useState("1");

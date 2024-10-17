@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LogOut, Menu, Search, Loader2 } from "lucide-react";
-import { useLogout } from "../hooks/useLogout.js";
-import Conversation from "./Conversation";
-import useGetConversations from "../hooks/useGetConversations";
+import { useLogout } from "../../hooks/useLogout.js";
+import Conversation from "./Conversation.jsx";
+import useGetConversations from "../../hooks/useGetConversations.js";
 import useConversation from "@/zustand/useConversation.js";
 import { toast } from "sonner";
 

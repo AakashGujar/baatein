@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { ScrollArea } from "../components/ui/scroll-area";
+import { ScrollArea } from "../../components/ui/scroll-area";
 import useConversation from "@/zustand/useConversation";
 import { useSocketContext } from "@/context/SocketContext";
 

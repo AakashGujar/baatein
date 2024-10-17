@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import useConversation from "@/zustand/useConversation";
 import useSendMessage from "@/hooks/useSendMessage";
 import useGetMessages from "@/hooks/useGetMessages";
-import ChatHeader from "./messages/ChatHeader";
-import Message from "./messages/Message";
-import ChatForm from "./messages/ChatForm";
-import WelcomeMessage from "./messages/WelcomeMessage";
+import ChatHeader from "./ChatHeader";
+import Message from "./Message";
+import ChatForm from "./ChatForm";
+import WelcomeMessage from "./WelcomeMessage";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import MessageSkeleton from "./skeletons/MessageSkeleton";
+import MessageSkeleton from "../skeletons/MessageSkeleton";
 
 export function ChatWindow() {
   const { selectedConversation, setSelectedConversation } = useConversation();

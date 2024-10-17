@@ -8,7 +8,7 @@ import { Toaster } from "./components/ui/sonner";
 import { AuthContextProvider, useAuthContext } from "./context/authContext";
 import { SocketContextProvider } from "./context/SocketContext";
 
-function AppRoutes() {
+const AppRoutes = () => {
   const { authUser } = useAuthContext();
   return (
     <Routes>
@@ -26,9 +26,9 @@ function AppRoutes() {
       />
     </Routes>
   );
-}
+};
 
-export default function App() {
+const App = () => {
   return (
     <AuthContextProvider>
       <SocketContextProvider>
@@ -39,4 +39,6 @@ export default function App() {
       </SocketContextProvider>
     </AuthContextProvider>
   );
-}
+};
+
+export default App;

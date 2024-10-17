@@ -9,24 +9,27 @@ export const signup = async (req, res) => {
         if (password !== confirmPassword) return res.status(400).json({ error: 'Passwords do not match' });
 
         const user = await User.findOne({ username });
+
         if (user) return res.status(400).json({ error: "User already exists" });
 
         const salt = await bcrypt.genSalt(10);
+        
         const hashedPassword = await bcrypt.hash(password, salt);
 
-
         const splitNames = fullName.split(" ");
+        
         let firstName = splitNames[0];
+        
         let lastName = splitNames.length > 1 ? splitNames[splitNames.length - 1] : '';
+        
         const profilePic = `https://avatar.iran.liara.run/username?username=${firstName}+${lastName}`;
-
+        
         const newUser = new User({
             fullName,
             username,
             password: hashedPassword,
             profilePic
         });
-
         if (newUser) {
             await generateTokenAndSetCookie(newUser._id, res)
             await newUser.save();

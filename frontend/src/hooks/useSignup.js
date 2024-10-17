@@ -33,7 +33,6 @@ export function useSignup() {
       setLoading(false);
     }
   };
-
   return { loading, signup };
 }
 
