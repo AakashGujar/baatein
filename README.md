@@ -1,26 +1,30 @@
-models --> 
-user model-->fN, uN, pwd, Dp
-msgs--> s_id(link w user model), r_id(link w user model), msg
-convos--> p[](link w user model), msgs(link w msgs), msg
+# Chat App
 
-CONTROLLERS
+Just a simple chat app built using Socket.io that allows real-time communication between users.
 
-middleware->
-newId/findedUser._id + Secret = JWT Token
+## Tech Stack
 
+- **Frontend**: React, TailwindCSS, Shadcn
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Real-time Communication**: Socket.io
+- **Authentication**: JWT
+- **State Management**: Zustand
+- **Deployed on**: Render
 
-signup --> 
-1) body(all) + val + salting -> new User (User)
-2) token --- newUser.id 
+## Features
 
-login --> 
-1) body(uN,pwd) + val ->login User
-2) user exists in db? 
-    salting - mongoUser? mongoUser.pwd == pwd?
-3) token --- mongoUser.id 
+Supports real-time messaging, user authentication via JWT, and displays user online status. More pending to build
 
-logout --> 
-1) body(uN,pwd) 
-2) clear jwt 
+## Setup Instructions
 
-sendMsg -->
+### Environment Variables
+
+Create a `.env` file in the root directory of the project with the following variables:
+
+```bash
+PORT=5000
+MONGO_DB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+NODE_ENV=development
+```
