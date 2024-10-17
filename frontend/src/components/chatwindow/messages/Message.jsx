@@ -13,11 +13,11 @@ const Message = memo(function Message({ message }) {
       }`}
     >
       <div
-        className={`rounded-lg p-3 max-w-[70%] ${
+        className={`rounded-lg p-2 sm:p-3 max-w-[85%] sm:max-w-[70%] ${
           isSentByMe ? "bg-blue-500 text-white" : "bg-zinc-800"
         }`}
       >
-        <p className="text-sm">{message.message}</p>
+        <p className="text-sm break-words">{message.message}</p>
       </div>
       <p
         className={`text-xs text-zinc-400 mt-1 ${

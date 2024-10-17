@@ -32,7 +32,7 @@ const App = () => {
   return (
     <AuthContextProvider>
       <SocketContextProvider>
-        <WavyBackground className="mx-auto">
+        <WavyBackground className="mx-auto flex items-center justify-center">
           <AppRoutes />
           <Toaster />
         </WavyBackground>

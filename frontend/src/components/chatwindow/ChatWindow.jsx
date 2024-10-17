@@ -4,10 +4,10 @@ import useSendMessage from "@/hooks/useSendMessage";
 import useGetMessages from "@/hooks/useGetMessages";
 import { useSocketContext } from "@/context/SocketContext";
 import useListenMessages from "@/hooks/useListenMessages";
-import ChatHeader from "./ChatHeader";
-import Message from "./Message";
-import ChatForm from "./ChatForm";
-import WelcomeMessage from "./WelcomeMessage";
+import ChatHeader from "../chatwindow/ChatHeader";
+import Message from "../chatwindow/messages/Message";
+import ChatForm from "../chatwindow/ChatForm";
+import WelcomeMessage from "../chatwindow/messages/WelcomeMessage";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
@@ -29,57 +29,47 @@ export function ChatWindow() {
   useListenMessages();
 
   useEffect(() => {
-    console.log("Current messages:", messages);
-  }, [messages]);
-
-  useEffect(() => {
     if (socket) {
-      console.log("Socket connected:", socket.connected);
-      socket.on("connect", () => console.log("Socket connected"));
-      socket.on("disconnect", () => console.log("Socket disconnected"));
       socket.on("newMessage", (newMessage) => {
-        console.log("New message received:", newMessage);
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       });
     }
     return () => {
       if (socket) {
         socket.off("newMessage");
-        socket.off("connect");
-        socket.off("disconnect");
       }
     };
   }, [socket, setMessages]);
 
   useEffect(() => {
-    const scrollToBottom = () => {
-      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
     if (!loadingMessages && messages.length > 0) {
-      scrollToBottom();
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, loadingMessages]);
-
-  useEffect(() => {
-    return () => {
-      setSelectedConversation(null);
-    };
-  }, [setSelectedConversation]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!message) return;
-    console.log("Sending message:", message);
     await sendMessage(message);
     setMessage("");
   };
 
+  const handleBack = () => {
+    setSelectedConversation(null);
+  };
+
   return (
-    <div className="flex min-w-[660px]">
+    <div
+      className={`flex-1 flex flex-col h-full lg:min-w-[660px] min-w-[380px] ${
+        selectedConversation ? "flex sm:flex" : "hidden sm:flex"
+      }`}
+    >
       {selectedConversation ? (
-        <div className="flex-1 flex flex-col">
-          <ChatHeader selectedConversation={selectedConversation} />
+        <>
+          <ChatHeader
+            selectedConversation={selectedConversation}
+            onBack={handleBack}
+          />
           <ScrollArea
             className="flex-1 p-4"
             ref={scrollAreaRef}
@@ -97,7 +87,7 @@ export function ChatWindow() {
             )}
           </ScrollArea>
           <Separator className="my-2" />
-          <div className="p-4 flex w-full">
+          <div className="p-4">
             <ChatForm
               message={message}
               setMessage={setMessage}
@@ -105,7 +95,7 @@ export function ChatWindow() {
               loading={sendingMessage}
             />
           </div>
-        </div>
+        </>
       ) : (
         <WelcomeMessage />
       )}

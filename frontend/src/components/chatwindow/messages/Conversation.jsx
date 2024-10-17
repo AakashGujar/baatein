@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from "react";
-import { ScrollArea } from "../../components/ui/scroll-area";
+import { ScrollArea } from "../../ui/scroll-area";
 import useConversation from "@/zustand/useConversation";
 import { useSocketContext } from "@/context/SocketContext";
 
@@ -31,7 +31,7 @@ const Conversation = ({ conversations }) => {
                 />
               </span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium">{conversation.fullName}</p>
+                <p className="text-sm font-medium truncate">{conversation.fullName}</p>
                 <p className="text-xs text-zinc-400 truncate">
                   {conversation.lastMessage || "No messages yet"}
                 </p>
