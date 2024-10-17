@@ -1,14 +1,26 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react";
-import { ScrollArea } from "../../ui/scroll-area";
+import { ScrollArea } from "../../components/ui/scroll-area";
 import useConversation from "@/zustand/useConversation";
 import { useSocketContext } from "@/context/SocketContext";
+import useGetMessages from "@/hooks/useGetMessages";
 
 const Conversation = ({ conversations }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { onlineUsers } = useSocketContext();
+  const { messages } = useGetMessages();
   
+  const getLastMessage = (conversationId) => {
+    // Filter messages for this conversation
+    const conversationMessages = messages.filter(
+      (message) => message.conversationId === conversationId
+    );
+    // Get the last message
+    const lastMessage = conversationMessages[conversationMessages.length - 1];
+    return lastMessage?.message || "No messages yet";
+  };
+
   return (
     <ScrollArea className="flex-1">
       {conversations.map((conversation) => {
@@ -33,7 +45,7 @@ const Conversation = ({ conversations }) => {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{conversation.fullName}</p>
                 <p className="text-xs text-zinc-400 truncate">
-                  {conversation.lastMessage || "No messages yet"}
+                  {getLastMessage(conversation._id)}
                 </p>
               </div>
               <div

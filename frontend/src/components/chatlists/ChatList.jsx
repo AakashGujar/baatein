@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { LogOut, Search, Loader2 } from "lucide-react";
-import { useLogout } from "../../hooks/useLogout";
-import Conversation from "../chatwindow/messages/Conversation";
-import useGetConversations from "../../hooks/useGetConversations";
-import useConversation from "../../zustand/useConversation";
+import { useLogout } from "@/hooks/useLogout";
+import Conversation from "./Conversation";
+import useGetConversations from "@/hooks/useGetConversations";
+import useConversation from "@/zustand/useConversation";
 import { toast } from "sonner";
 
 export function ChatList() {
@@ -13,8 +13,7 @@ export function ChatList() {
   const [search, setSearch] = useState("");
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { conversations } = useGetConversations();
-  const [filteredConversations, setFilteredConversations] =
-    useState(conversations);
+  const [filteredConversations, setFilteredConversations] = useState(conversations);
 
   useEffect(() => {
     setFilteredConversations(

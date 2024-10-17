@@ -1,13 +1,13 @@
 {
-  "name": "backend",
+  "name": "chat-app",
   "version": "1.0.0",
   "description": "A simple chat app",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "server": "nodemon backend/index.js",
+    "start": "node backend/index.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Aakash Gujar",
   "license": "ISC",
