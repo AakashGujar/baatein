@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { toast } from "sonner";
 import { useState } from "react";
-import { useAuthContext } from "../context/authContext";
+import { useAuthContext } from "../context/AuthContext";
 
 export function useLogout() {
   const [loading, setLoading] = useState(false);

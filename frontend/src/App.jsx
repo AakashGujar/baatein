@@ -5,7 +5,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import { Toaster } from "./components/ui/sonner";
-import { AuthContextProvider, useAuthContext } from "./context/authContext";
+import { AuthContextProvider, useAuthContext } from "./context/AuthContext";
 import { SocketContextProvider } from "./context/SocketContext";
 
 const AppRoutes = () => {
