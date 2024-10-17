@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useAuthContext } from "../context/authContext";
+import { useAuthContext } from "../context/AuthContext";
 import { useState } from "react";
 import { toast } from "sonner";
 
