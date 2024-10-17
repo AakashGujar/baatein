@@ -13,28 +13,43 @@ export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { authUser } = useAuthContext();
-  useEffect(
-    () => {
-      if (authUser) {
-        const socket = io("http://localhost:5000", {
-          query: {
-            userId: authUser._id,
-          },
-        });
-        setSocket(socket);
-        socket.on("getOnlineUsers", (users) => {
-          setOnlineUsers(users);
-        });
-        return () => socket.close();
-      } else {
-        if (socket) {
-          socket.close();
-          setSocket(null);
+
+  useEffect(() => {
+    let newSocket;
+    if (authUser) {
+      newSocket = io("http://localhost:5000", {
+        query: {
+          userId: authUser._id,
+        },
+      });
+
+      setSocket(newSocket);
+
+      newSocket.on("getOnlineUsers", (users) => {
+        setOnlineUsers(users);
+      });
+
+      newSocket.on("connect", () => {
+        console.log("Socket connected");
+      });
+
+      newSocket.on("connect_error", (error) => {
+        console.error("Socket connection error:", error);
+      });
+
+      return () => {
+        if (newSocket) {
+          newSocket.disconnect();
         }
+      };
+    } else {
+      if (socket) {
+        socket.disconnect();
+        setSocket(null);
       }
-    },
-    [authUser]
-  );
+    }
+  }, [authUser]);
+
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>
       {children}

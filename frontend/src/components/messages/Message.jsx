@@ -1,36 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useEffect, useRef } from "react";
+import { memo } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import useGetMessages from "@/hooks/useGetMessages";
 
-// Utility function to debounce scroll calls
-const debounce = (func, delay) => {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
-};
-
-const Message = ({ message }) => {
+const Message = memo(function Message({ message }) {
   const { authUser } = useAuthContext();
-  const { messages, loading } = useGetMessages();
-  const lastMessageRef = useRef();
   const isSentByMe = message.senderId === authUser._id;
-
-  // Scroll to the last message, debounced to prevent excessive calls
-  const scrollToLastMessage = debounce(() => {
-    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, 300);
-
-  useEffect(() => {
-    if (!loading && messages.length > 0) {
-      scrollToLastMessage();
-    }
-  }, [loading, messages, scrollToLastMessage]);
 
   return (
     <div
@@ -55,9 +29,8 @@ const Message = ({ message }) => {
           minute: "2-digit",
         })}
       </p>
-      <div ref={lastMessageRef}></div>
     </div>
   );
-};
+});
 
 export default Message;
