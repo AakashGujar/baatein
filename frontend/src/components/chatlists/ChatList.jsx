@@ -43,7 +43,7 @@ export function ChatList() {
 
   return (
     <div
-      className={`w-full lg:w-80 w-[300px] w-[380px] h-full flex flex-col ${
+      className={`w-full sm:w-[300px] md:w-[380px] lg:w-80 h-full flex flex-col ${
         selectedConversation ? "hidden sm:flex" : "flex"
       }`}
     >

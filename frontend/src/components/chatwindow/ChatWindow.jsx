@@ -60,8 +60,8 @@ export function ChatWindow() {
 
   return (
     <div
-      className={`flex-1 flex flex-col h-full lg:min-w-[660px] min-w-[380px] ${
-        selectedConversation ? "flex sm:flex" : "hidden sm:flex"
+      className={`flex-1 flex flex-col h-full w-full sm:w-[calc(100%-300px)] md:w-[calc(100%-380px)] lg:w-[calc(100%-320px)] ${
+        selectedConversation ? "flex" : "hidden sm:flex"
       }`}
     >
       {selectedConversation ? (

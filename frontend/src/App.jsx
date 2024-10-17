@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Navigate, Route, Routes } from "react-router-dom";
 import { WavyBackground } from "./components/ui/wavy-background";
 import Home from "./pages/home/Home";
@@ -28,17 +27,17 @@ const AppRoutes = () => {
   );
 };
 
-const App = () => {
+export default function App() {
   return (
     <AuthContextProvider>
       <SocketContextProvider>
-        <WavyBackground className="mx-auto flex items-center justify-center">
-          <AppRoutes />
-          <Toaster />
+        <WavyBackground className="w-full h-full">
+          <div className="w-full h-full flex items-center justify-center">
+            <AppRoutes />
+          </div>
         </WavyBackground>
+        <Toaster />
       </SocketContextProvider>
     </AuthContextProvider>
   );
-};
-
-export default App;
+}
