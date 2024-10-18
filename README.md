@@ -1,23 +1,22 @@
 # Chat App
 
-Just a simple chat app built using Socket.io (Work in progress).
+A simple chat app using Socket.io. Still a WIP, but it's deployed [here](https://chatappprod.onrender.com/).
 
 ## Tech Stack
 
-- **Frontend**: React, TailwindCSS, Shadcn
+- **Frontend**: React, TailwindCSS, Shadcn, AceternityUI
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
-- **Real-time Communication**: Socket.io
-- **Authentication**: JWT
-- **State Management**: Zustand
+- **Real-time**: Socket.io
+- **Auth**: JWT, Zod
+- **State Management**: Zustand (Switching to RTK soon)
 
 ## Limitations
 
-These aren't just limitations — I plan to work on them!
+These are temporary, I’m on it:
 
-1) This "chat app" doesn't currently allow messaging someone who hasn't registered with the app.
-2) Zod for validation
-3) There's no option for voice or video calls yet.
-4) Group chat functionality is not available at the moment.
-5) The app isn't built for large-scale use yet. I'll gradually introduce Kafka, Redis, Microservices Architecture, Load Balancers, and other scaling solutions.
-
+1. Can’t message unregistered users yet or share them link
+2. No real-time notifications
+3. Voice/video calls are missing
+4. Group chat isn’t available
+5. Not built for large scale (yet) Need to implement Kafka, Redis, microservices, load balancing, etc.
