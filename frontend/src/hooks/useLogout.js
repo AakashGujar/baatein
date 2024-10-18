@@ -2,6 +2,7 @@
 import { toast } from "sonner";
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 export function useLogout() {
   const [loading, setLoading] = useState(false);
@@ -10,20 +11,17 @@ export function useLogout() {
   const logout = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
+      const res = await axios.post("/api/auth/logout");
+      const data = res.data;
       if (data.error) {
         throw new Error(data.error);
       }
       localStorage.removeItem("chat-user");
       setAuthUser(null);
-      toast("Logged out successfully!");
+      toast.success("Logged out successfully!");
 
     } catch (error) {
-      toast(`${error.message}`);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

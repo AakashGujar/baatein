@@ -2,6 +2,7 @@
 import { useAuthContext } from "../context/AuthContext";
 import { useState } from "react";
 import { toast } from "sonner";
+import axios from "axios";
 
 export function useLogin() {
   const [loading, setLoading] = useState(false);
@@ -12,22 +13,20 @@ export function useLogin() {
     if (!success) return;
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+      const res = await axios.post("/api/auth/login", {
+        username, password
       });
 
-      const data = await res.json();
+      const data = res.data;
       if (data.error) {
         throw new Error(data.error);
       }
 
       localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser(data);
-      toast("Logged in successful!");
+      toast.success("Login successful!");
     } catch (error) {
-      toast(` ${error.message}`);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -38,7 +37,7 @@ export function useLogin() {
 
 function handleInputErrors({ username, password }) {
   if (!username || !password) {
-    toast("Please fill in all required fields to continue.");
+    toast.error("Please fill in all required fields to continue.");
     return false;
   }
   return true;
