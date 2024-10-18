@@ -12,9 +12,7 @@ A simple chat app using Socket.io. Still a WIP, but it's deployed [here](https:/
 - **State Management**: Zustand (Switching to RTK soon)
 
 ## Limitations
-
-These are temporary, I’m on it:
-
+(Temp)
 1. Can’t message unregistered users yet or share them link
 2. No real-time notifications
 3. Voice/video calls are missing
