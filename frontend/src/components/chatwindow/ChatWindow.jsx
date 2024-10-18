@@ -11,6 +11,7 @@ import WelcomeMessage from "../chatwindow/messages/WelcomeMessage";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
+import { MessageSquare } from "lucide-react";
 
 export function ChatWindow() {
   const {
@@ -58,6 +59,31 @@ export function ChatWindow() {
     setSelectedConversation(null);
   };
 
+  const renderChatContent = () => {
+    if (loadingMessages) {
+      return <MessageSkeleton />;
+    }
+
+    if (messages.length === 0) {
+      return (
+        <div className="flex flex-col items-center justify-center h-full text-zinc-400">
+          <MessageSquare className="w-16 h-16 mb-4" />
+          <p className="text-lg font-semibold">No messages yet</p>
+          <p className="text-sm">Send a message to start the conversation!</p>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        {messages.map((msg) => (
+          <Message key={msg._id} message={msg} />
+        ))}
+        <div ref={lastMessageRef} />
+      </>
+    );
+  };
+
   return (
     <div
       className={`flex-1 flex flex-col h-full w-full sm:w-[calc(100%-300px)] md:w-[calc(100%-380px)] lg:w-[calc(100%-320px)] ${
@@ -75,16 +101,7 @@ export function ChatWindow() {
             ref={scrollAreaRef}
             viewportRef={scrollAreaRef}
           >
-            {loadingMessages ? (
-              <MessageSkeleton />
-            ) : (
-              <>
-                {messages.map((msg) => (
-                  <Message key={msg._id} message={msg} />
-                ))}
-                <div ref={lastMessageRef} />
-              </>
-            )}
+            {renderChatContent()}
           </ScrollArea>
           <Separator className="my-2" />
           <div className="p-4">

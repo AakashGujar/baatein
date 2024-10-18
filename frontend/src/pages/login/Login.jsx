@@ -19,7 +19,7 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-lg p-4 md:p-8 shadow-input bg-black bg-opacity-60">
+    <div className="max-w-md w-full mx-auto rounded-none md:rounded-lg p-4 md:p-8 shadow-input bg-black bg-opacity-40 backdrop-blur-md">
       <h2 className="font-bold text-2xl text-neutral-200">Welcome Back</h2>
       <p className="text-neutral-400 text-sm max-w-sm mt-2 text-neutral-300">
         Log in to continue chatting with your friends and making new
