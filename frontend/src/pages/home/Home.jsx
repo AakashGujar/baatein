@@ -7,7 +7,7 @@ import useConversation from "@/zustand/useConversation";
 export default function Home() {
   return (
     <div className="w-full h-full flex items-center justify-center p-2 sm:p-4">
-      <div className="w-full h-full max-w-5xl max-h-[85vh] flex flex-col sm:flex-row bg-black bg-opacity-40 backdrop-blur-md text-zinc-100 rounded-lg overflow-hidden shadow-2xl">
+      <div className="w-full h-full max-w-5xl max-h-[85vh] flex flex-col sm:flex-row bg-black bg-opacity-70 backdrop-blur-md text-zinc-100 rounded-lg overflow-hidden shadow-2xl">
         <ChatList />
         <ChatWindow />
       </div>
