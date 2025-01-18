@@ -9,13 +9,17 @@ export function useSocket() {
         const initSocket = async () => {
             await fetch('/api/socket')
 
-            socketRef.current = io()
+            socketRef.current = io({
+                path: '/api/socketio',
+            })
 
             socketRef.current.on('connect', () => {
+                console.log('Socket connected')
                 setIsConnected(true)    
             })
 
             socketRef.current.on('disconnect', () => {
+                console.log('Socket disconnected')
                 setIsConnected(false)
             })
         }
