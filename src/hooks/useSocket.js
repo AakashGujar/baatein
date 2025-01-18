@@ -7,13 +7,13 @@ export function useSocket() {
 
     useEffect(() => {
         const initSocket = async () => {
-            await fetch('/api/socketio') // Trigger the server to initialize the socket
+            await fetch('/api/socketio')
 
             socketRef.current = io({
                 path: '/api/socketio',
-                transports: ['websocket', 'polling'], // Ensure WebSocket and long-polling are used
-                withCredentials: true, // Allow sending cookies if needed
-                autoConnect: true, // Automatically connect when the socket is initialized
+                transports: ['websocket', 'polling'],
+                withCredentials: true,
+                autoConnect: true,
             })
 
             socketRef.current.on('connect', () => {
