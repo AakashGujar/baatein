@@ -2,7 +2,6 @@ import { Server } from 'socket.io';
 
 const SocketHandler = (req, res) => {
   if (res.socket.server.io) {
-    // console.log('Socket is already running');
     res.end();
     return;
   }
@@ -12,12 +11,13 @@ const SocketHandler = (req, res) => {
 
   const roomUsers = new Map();
   const roomTimers = new Map();
+
   io.on('connection', (socket) => {
-    // console.log('A user connected:', socket.id);
     socket.on('create-room', ({ roomId, timer }) => {
       roomTimers.set(roomId, timer);
-    }); 
-    socket.on('join-room', (roomId) => {
+    });
+
+    socket.on('`join-room`', (roomId) => {
       socket.join(roomId);
       if (!roomUsers.has(roomId)) {
         roomUsers.set(roomId, 0);
@@ -29,13 +29,11 @@ const SocketHandler = (req, res) => {
         timer: roomTimer
       });
       socket.to(roomId).emit('user-count', roomUsers.get(roomId));
-      // console.log(`User ${socket.id} joined room ${roomId}`);
     });
 
 
     socket.on('leave-room', (roomId) => {
       socket.leave(roomId);
-
       if (roomUsers.has(roomId)) {
         roomUsers.set(roomId, Math.max(0, roomUsers.get(roomId) - 1));
         if (roomUsers.get(roomId) === 0) {
