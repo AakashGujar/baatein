@@ -1,39 +1,54 @@
-import { useEffect, useRef, useState } from 'react'
-import io from 'socket.io-client'
+import { useEffect, useRef, useState } from 'react';
+import io from 'socket.io-client';
 
 export function useSocket() {
-    const [isConnected, setIsConnected] = useState(false)
-    const socketRef = useRef(null)
+  const [isConnected, setIsConnected] = useState(false);
+  const socketRef = useRef(null);
 
-    useEffect(() => {
-        const initSocket = async () => {
-            const socketUrl = "https://trmnt-d-cht.vercel.app"
+  useEffect(() => {
+    const initSocket = async () => {
+      if (!socketRef.current) {
+        const socketUrl = process.env.NODE_ENV === 'production' 
+          ? window.location.origin 
+          : 'http://localhost:3000';
 
-            await fetch('/api/socket')
+        socketRef.current = io(socketUrl, {
+          path: '/api/socketio',
+          addTrailingSlash: false,
+          transports: ['websocket'],
+          reconnectionAttempts: 5,
+          reconnectionDelay: 1000,
+        });
 
-            socketRef.current = io(socketUrl, {
-                path: '/api/socketio',
-            });
+        socketRef.current.on('connect', () => {
+          console.log('Socket connected');
+          setIsConnected(true);
+        });
 
-            socketRef.current.on('connect', () => {
-                setIsConnected(true)
-            })
-            socketRef.current.on('disconnect', () => {
-                setIsConnected(false)
-            })
-        }
+        socketRef.current.on('connect_error', (error) => {
+          console.error('Socket connection error:', error);
+          setIsConnected(false);
+        });
 
-        initSocket()
+        socketRef.current.on('disconnect', () => {
+          console.log('Socket disconnected');
+          setIsConnected(false);
+        });
+      }
+    };
 
-        return () => {
-            if (socketRef.current) {
-                socketRef.current.disconnect()
-            }
-        }
-    }, [])
+    initSocket();
 
-    return {
-        socket: socketRef.current,
-        isConnected
-    }
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+    };
+  }, []);
+
+  return {
+    socket: socketRef.current,
+    isConnected
+  };
 }
