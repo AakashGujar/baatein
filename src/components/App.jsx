@@ -23,26 +23,26 @@ export default function App() {
   // Socket event listeners
   useEffect(() => {
     if (socket) {
-      socket.on('chat-message', (message) => {
+      socket.on("chat-message", (message) => {
         setMessages((prev) => [...prev, message]);
       });
-  
-      socket.on('user-count', (count) => {
+
+      socket.on("user-count", (count) => {
         setUserCount(count);
       });
 
-      socket.on('room-info', ({ userCount, timer }) => {
+      socket.on("room-info", ({ userCount, timer }) => {
         setUserCount(userCount);
         if (timer) {
           setTimer(timer);
           setRemainingTime(timer * 60);
         }
       });
-  
+
       return () => {
-        socket.off('chat-message');
-        socket.off('user-count');
-        socket.off('room-info');
+        socket.off("chat-message");
+        socket.off("user-count");
+        socket.off("room-info");
       };
     }
   }, [socket]);
@@ -50,10 +50,10 @@ export default function App() {
   // Room management
   useEffect(() => {
     if (socket && group) {
-      socket.emit("join-room", group);
+      socket.emit("join-room", { roomId: group, username: user });
 
       return () => {
-        socket.emit("leave-room", group);
+        socket.emit("leave-room", { roomId: group, username: user });
       };
     }
   }, [socket, group]);
@@ -81,24 +81,28 @@ export default function App() {
     }
   }, [group, remainingTime]);
 
+  // Join a room
   const handleJoin = () => {
     if (username && groupCode) {
       setUser(username);
       setGroup(groupCode);
-      // Don't set remainingTime here - wait for room-info event
+      socket.emit("join-room", {
+        roomId: groupCode,
+        username: username,
+      });
       toast.success(`Joined as ${username}`);
     } else {
       toast.error("Please enter both username and group code");
     }
   };
 
+  // Create a room
   const handleCreate = () => {
     if (username) {
       const newGroupCode = Math.random().toString(36).substring(7);
-      // Emit create-room event with timer value
-      socket.emit('create-room', {
+      socket.emit("create-room", {
         roomId: newGroupCode,
-        timer: timer
+        timer: timer,
       });
       setUser(username);
       setGroup(newGroupCode);
@@ -110,12 +114,13 @@ export default function App() {
     }
   };
 
-
+  // Copy the room code
   const copyGroupCode = () => {
     navigator.clipboard.writeText(groupCode);
     toast.success("Code copied to clipboard!");
   };
 
+  // Send a message
   const sendMessage = () => {
     if (inputMessage && socket) {
       const newMessage = {
@@ -128,9 +133,13 @@ export default function App() {
     }
   };
 
+  // Leave the chat
   const leaveChat = () => {
-    if (socket && group) {
-      socket.emit("leave-room", group);
+    if (socket && group && user) {
+      socket.emit("leave-room", {
+        roomId: group,
+        username: user,
+      });
     }
     setUser(null);
     setGroup(null);
