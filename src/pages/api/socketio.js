@@ -12,12 +12,13 @@ const SocketHandler = (req, res) => {
     path: '/api/socketio',
     addTrailingSlash: false,
     cors: {
-      origin: '*',
+      origin: 'https://trmnt-d-cht.vercel.app',
       methods: ['GET', 'POST'],
       allowedHeaders: ['Content-Type'],
       credentials: true,
     },
   })
+  
   res.socket.server.io = io
 
   const roomUsers = new Map()
