@@ -7,7 +7,7 @@ export function useSocket() {
 
     useEffect(() => {
         const initSocket = async () => {
-            await fetch('/api/socket')
+            await fetch('/api/socketio')
 
             socketRef.current = io({
                 path: '/api/socketio',
