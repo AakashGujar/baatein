@@ -7,14 +7,17 @@ export function useSocket() {
 
     useEffect(() => {
         const initSocket = async () => {
+            const socketUrl = "https://trmnt-d-cht.vercel.app"
+
             await fetch('/api/socket')
 
-            socketRef.current = io()
+            socketRef.current = io(socketUrl, {
+                path: '/api/socketio',
+            });
 
             socketRef.current.on('connect', () => {
-                setIsConnected(true)    
+                setIsConnected(true)
             })
-
             socketRef.current.on('disconnect', () => {
                 setIsConnected(false)
             })
