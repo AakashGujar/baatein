@@ -4,9 +4,9 @@
   "description": "Backend server for the chat application",
   "main": "index.js",
   "scripts": {
+    "build": "npm install",
     "start": "node index.js",
-    "dev": "npm run start",
-    "build": "echo 'No build step needed for this project'"
+    "dev": "npm run start"
   },
   "dependencies": {
     "cors": "^2.8.5",
